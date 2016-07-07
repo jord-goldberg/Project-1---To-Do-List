@@ -25,8 +25,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
- //       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
- //       setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Much A-Do About To-Do");
+        //       setSupportActionBar(toolbar);
 
 //Creates an instance of my singleton
 
@@ -41,7 +42,8 @@ public class HomeActivity extends AppCompatActivity {
 
 //Instantiates an adapter and sets it to the recyclerview
 
-        final ListRecyclerViewAdapter listRecyclerViewAdapter = new ListRecyclerViewAdapter(muchAdo.getToDoLists());
+        final ListRecyclerViewAdapter listRecyclerViewAdapter =
+                new ListRecyclerViewAdapter(muchAdo.getToDoLists());
         recyclerView.setAdapter(listRecyclerViewAdapter);
 
 
@@ -52,30 +54,58 @@ public class HomeActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
                 final View dialogView = LayoutInflater.from(HomeActivity.this).
                         inflate(R.layout.new_list_dialog, null);
-                builder.setView(dialogView)
-                        .setPositiveButton("Create List", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ToDoList newList = new ToDoList();
-                                EditText title = (EditText) dialogView.
-                                        findViewById(R.id.list_title_entry);
-                                EditText description = (EditText) dialogView.
-                                        findViewById(R.id.list_description_entry);
-                                newList.setTitle(title.getText().toString());
-                                newList.setDescription(description.getText().toString());
-                                muchAdo.addToDo(newList);
-                                listRecyclerViewAdapter.notifyDataSetChanged();
-                            }
-                        })
+                builder.setView(dialogView);
+                final ToDoList newList = new ToDoList();
+                final EditText title = (EditText) dialogView.findViewById(R.id.list_title_entry);
+                final EditText description = (EditText) dialogView.
+                        findViewById(R.id.list_description_entry);
+                builder.setPositiveButton("Create List", null)
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                             }
                         });
-                AlertDialog dialog = builder.create();
+                final AlertDialog dialog = builder.create();
                 dialog.show();
+
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (title.getText().length() == 0) {
+                            title.setError("Every List needs a title! Enter one");
+                        } else if (title.getText().length() > 36) {
+                            title.setError("Title too long. Put info into description");
+                        } else if(title.getText().toString().contains("\n")){
+                            title.setError("Keep the title to a single line!");
+                        }
+                        else {
+                            newList.setTitle(title.getText().toString());
+                            newList.setDescription(description.getText().toString());
+                            muchAdo.addToDo(newList);
+                            listRecyclerViewAdapter.notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                    }
+                });
             }
         });
+
+        if(muchAdo.getToDoLists().size() == 0){
+            AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+            builder.setTitle("Welcome to Much A-Do About To-Do!");
+            builder.setMessage("I see you have no To-Do lists yet. \nLet me help you get started."+
+                    "\n \n - Click on the pink button below to create new To-Do lists"+
+                    "\n - Click on your existing lists to access them\n - Use the "+
+                    "pink button to add items to your To-Do list\n - Long click on any list or item to "+
+                    "delete it\n - Use your back button to navigate back");
+            builder.setPositiveButton("Got it!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
 //    @Override

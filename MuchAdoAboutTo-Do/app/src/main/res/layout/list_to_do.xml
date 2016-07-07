@@ -2,14 +2,15 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground">
 
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:background="#ff0000"
         android:id="@+id/colorbox"/>
 
@@ -32,5 +33,11 @@
         android:layout_toRightOf="@+id/colorbox"
         android:layout_below="@+id/list_title"
         android:textSize="16sp"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#d3d3d3"
+        android:layout_below="@+id/list_description"/>
 
 </RelativeLayout>

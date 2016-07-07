@@ -21,7 +21,7 @@ public class MuchAdo {
         return mMuchAdo;
     }
 
-    public static LinkedList<ToDoList> getToDoLists() {
+    public LinkedList<ToDoList> getToDoLists() {
         return mToDoLists;
     }
 

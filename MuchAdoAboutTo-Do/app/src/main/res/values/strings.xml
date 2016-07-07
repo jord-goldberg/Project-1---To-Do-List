@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Much Ado About To-Do</string>
+    <string name="app_name">Much A-Do About To-Do</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_list">ListActivity</string>
+    <string name="title_activity_list">Much A-Do About To-Do</string>
 </resources>

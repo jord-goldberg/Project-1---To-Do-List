@@ -29,6 +29,10 @@ public class ToDoList {
         mToDoItems.add(toDoItem);
     }
 
+    public void removeToDoItem(int position) {
+        mToDoItems.remove(position);
+    }
+
     public LinkedList<ToDoItem> getToDoItemList() {
         return mToDoItems;
     }
