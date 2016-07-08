@@ -76,9 +76,9 @@ public class ListActivity extends AppCompatActivity {
                         EditText title = (EditText) dialogView.findViewById(R.id.item_title_entry);
                         EditText description = (EditText) dialogView.
                                 findViewById(R.id.item_description_entry);
-                        if (title.getText().length() == 0) {
+                        if (title.getText().toString().trim().length() == 0) {
                             title.setError("Every Item needs a name! Enter one");
-                        } else if (title.getText().length() > 36 &&
+                        } else if (title.getText().toString().trim().length() > 36 &&
                                 !title.getText().toString().contains("\n")) {
                             title.setError("Item name too long. Put info into description");
                         } else if (title.getText().toString().contains("\n")) {
@@ -86,16 +86,16 @@ public class ListActivity extends AppCompatActivity {
                             for (int i = 0; i < items.length; i++){
                                 toDoList.addToDoItem(new ToDoItem());
                                 toDoList.getToDoItem(toDoList.getToDoItemList().size()-1)
-                                        .setTitle(items[i]);
+                                        .setTitle(items[i].trim());
                                 toDoList.getToDoItem(toDoList.getToDoItemList().size()-1)
-                                        .setDescription(description.getText().toString());
+                                        .setDescription(description.getText().toString().trim());
                                 itemRecyclerViewAdapter.notifyDataSetChanged();
                                 dialog.dismiss();
                             }
 
                         } else {
-                            newItem.setTitle(title.getText().toString());
-                            newItem.setDescription(description.getText().toString());
+                            newItem.setTitle(title.getText().toString().trim());
+                            newItem.setDescription(description.getText().toString().trim());
                             toDoList.addToDoItem(newItem);
                             itemRecyclerViewAdapter.notifyDataSetChanged();
                             dialog.dismiss();

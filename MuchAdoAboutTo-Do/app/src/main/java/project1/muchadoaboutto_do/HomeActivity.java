@@ -78,16 +78,16 @@ public class HomeActivity extends AppCompatActivity {
                 dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (title.getText().length() == 0) {
+                        if (title.getText().toString().trim().length() == 0) {
                             title.setError("Every List needs a title! Enter one");
-                        } else if (title.getText().length() > 36) {
+                        } else if (title.getText().toString().trim().length() > 36) {
                             title.setError("Title too long. Put info into description");
                         } else if(title.getText().toString().contains("\n")){
                             title.setError("Keep the title to a single line!");
                         }
                         else {
-                            newList.setTitle(title.getText().toString());
-                            newList.setDescription(description.getText().toString());
+                            newList.setTitle(title.getText().toString().trim());
+                            newList.setDescription(description.getText().toString().trim());
                             muchAdo.addToDo(newList);
                             listRecyclerViewAdapter.notifyDataSetChanged();
                             dialog.dismiss();
