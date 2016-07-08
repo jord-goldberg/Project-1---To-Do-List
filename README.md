@@ -18,3 +18,10 @@ A simple to-do list app to keep track of your day-to-day needs and desires. Stil
 - **Delete items from a to-do list**
 - **Remove an entire to-do list**
 - Shows an error message if invalid input is given
+
+
+---
+
+#### Bugs
+
+- When changing the color of a list (by clicking the list title in the second activity), the color change doesn't register after going back to the home activity until the floating action button is pressed.
