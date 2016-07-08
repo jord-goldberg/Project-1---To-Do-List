@@ -22,10 +22,6 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
         mCheckBox = (CheckBox) itemView.findViewById(R.id.checkbox);
     }
 
-    public void setOnClickListener(View.OnClickListener onClickListener){
-        itemView.setOnClickListener(onClickListener);
-    }
-
     public TextView getItemTitle() {
         return mItemTitle;
     }

@@ -1,7 +1,9 @@
 package project1.muchadoaboutto_do;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -9,11 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.LinkedList;
@@ -47,10 +52,12 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setAdapter(listRecyclerViewAdapter);
 
 
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_home);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                listRecyclerViewAdapter.notifyDataSetChanged();
                 AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
                 final View dialogView = LayoutInflater.from(HomeActivity.this).
                         inflate(R.layout.new_list_dialog, null);
@@ -93,11 +100,10 @@ public class HomeActivity extends AppCompatActivity {
         if(muchAdo.getToDoLists().size() == 0){
             AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
             builder.setTitle("Welcome to Much A-Do About To-Do!");
-            builder.setMessage("I see you have no To-Do lists yet. \nLet me help you get started."+
-                    "\n \n - Click on the pink button below to create new To-Do lists"+
-                    "\n - Click on your existing lists to access them\n - Use the "+
-                    "pink button to add items to your To-Do list\n - Long click on any list or item to "+
-                    "delete it\n - Use your back button to navigate back");
+            builder.setMessage("I see you have no To-Do lists yet. \nI'll help you get started."+
+                    "\n \n - Use the pink button to create new To-Do lists"+
+                    "\n - Click on your existing lists to access them\n - Long click on any list "+
+                    "or item to delete it\n - Use your back button to navigate back");
             builder.setPositiveButton("Got it!", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

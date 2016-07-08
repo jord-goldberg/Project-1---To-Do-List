@@ -25,15 +25,7 @@ public class MuchAdo {
         return mToDoLists;
     }
 
-    public void setToDoLists(LinkedList<ToDoList> toDoList) {
-        mToDoLists = toDoList;
-    }
-
     public void addToDo(ToDoList toDoList){
         mToDoLists.add(toDoList);
-    }
-
-    public void removeToDo(int position){
-        mToDoLists.remove(position);
     }
 }

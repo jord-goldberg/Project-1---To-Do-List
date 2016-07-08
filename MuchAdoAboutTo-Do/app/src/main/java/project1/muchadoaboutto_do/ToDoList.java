@@ -14,7 +14,7 @@ public class ToDoList {
 
     public ToDoList(){
         mToDoItems = new LinkedList<ToDoItem>();
-        mColor = "#FF0000";
+        mColor = "#be0000";
     }
 
     public String getColor(){
@@ -29,8 +29,8 @@ public class ToDoList {
         mToDoItems.add(toDoItem);
     }
 
-    public void removeToDoItem(int position) {
-        mToDoItems.remove(position);
+    public ToDoItem getToDoItem(int position) {
+        return mToDoItems.get(position);
     }
 
     public LinkedList<ToDoItem> getToDoItemList() {

@@ -17,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ListActivity extends AppCompatActivity {
 
     @Override
@@ -33,9 +35,9 @@ public class ListActivity extends AppCompatActivity {
 
         final MuchAdo muchAdo = MuchAdo.getInstance();
         final ToDoList toDoList = muchAdo.getToDoLists().get(position);
-        TextView listName = (TextView) findViewById(R.id.list_name);
+        final TextView listName = (TextView) findViewById(R.id.list_name);
         listName.setText(muchAdo.getToDoLists().get(position).getTitle());
-        listName.setTextColor(Color.parseColor(muchAdo.getToDoLists().get(position).getColor()));
+        listName.setTextColor(Color.parseColor(toDoList.getColor()));
 
 //Instantiates the recyclerview and sets up a vertical linear layout manager
 
@@ -58,10 +60,6 @@ public class ListActivity extends AppCompatActivity {
                 final View dialogView = LayoutInflater.from(ListActivity.this).
                         inflate(R.layout.new_item_dialog, null);
                 builder.setView(dialogView);
-                final ToDoItem newItem = new ToDoItem();
-                final EditText title = (EditText) dialogView.findViewById(R.id.item_title_entry);
-                final EditText description = (EditText) dialogView.
-                        findViewById(R.id.item_description_entry);
                 builder.setPositiveButton("Create To-Do", null)
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
@@ -74,12 +72,27 @@ public class ListActivity extends AppCompatActivity {
                 dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        ToDoItem newItem = new ToDoItem();
+                        EditText title = (EditText) dialogView.findViewById(R.id.item_title_entry);
+                        EditText description = (EditText) dialogView.
+                                findViewById(R.id.item_description_entry);
                         if (title.getText().length() == 0) {
                             title.setError("Every Item needs a name! Enter one");
-                        } else if (title.getText().length() > 36) {
+                        } else if (title.getText().length() > 36 &&
+                                !title.getText().toString().contains("\n")) {
                             title.setError("Item name too long. Put info into description");
                         } else if (title.getText().toString().contains("\n")) {
-                            title.setError("Keep the item name to a single line!");
+                            String[] items = title.getText().toString().split("\n");
+                            for (int i = 0; i < items.length; i++){
+                                toDoList.addToDoItem(new ToDoItem());
+                                toDoList.getToDoItem(toDoList.getToDoItemList().size()-1)
+                                        .setTitle(items[i]);
+                                toDoList.getToDoItem(toDoList.getToDoItemList().size()-1)
+                                        .setDescription(description.getText().toString());
+                                itemRecyclerViewAdapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+
                         } else {
                             newItem.setTitle(title.getText().toString());
                             newItem.setDescription(description.getText().toString());
@@ -88,11 +101,49 @@ public class ListActivity extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     }
-
                 });
             }
-
         });
 
+//Allows the colorbox and title TextView to change colors, but the colorbox only changes after
+// a new list is made in the home activity, which notifies the adapter that the dataset was updated
+
+        final String[] colorChoices = new String[4];
+        colorChoices[0] = "Red";
+        colorChoices[1] = "Orange";
+        colorChoices[2] = "Blue";
+        colorChoices[3] = "Green";
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ListActivity.this);
+                builder.setTitle("Pick a color");
+                builder.setItems(colorChoices, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i){
+                            case 0:
+                                toDoList.setColor("#be0000");
+                                listName.setTextColor(Color.parseColor(toDoList.getColor()));
+                                break;
+                            case 1:
+                                toDoList.setColor("#ff6600");
+                                listName.setTextColor(Color.parseColor(toDoList.getColor()));
+                                break;
+                            case 2:
+                                toDoList.setColor("#007fff");
+                                listName.setTextColor(Color.parseColor(toDoList.getColor()));
+                                break;
+                            default:
+                                toDoList.setColor("#37ae5f");
+                                listName.setTextColor(Color.parseColor(toDoList.getColor()));
+                        }
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        };
+        listName.setOnClickListener(onClickListener);
     }
 }
