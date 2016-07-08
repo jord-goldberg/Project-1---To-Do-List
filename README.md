@@ -2,7 +2,7 @@
 
 #### Overview
 
-A simple to-do list app to keep track of your day-to-day needs and desires. Still in alpha, facebook integration and facial recognition coming soon!
+A simple to-do list app to keep track of your day-to-day needs and desires. Still in alpha; facebook integration and facial recognition coming soon!
 
 
 ---
