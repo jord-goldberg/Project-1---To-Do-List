@@ -25,3 +25,11 @@ A simple to-do list app to keep track of your day-to-day needs and desires. Stil
 #### Bugs
 
 - When changing the color of a list (by clicking the list title in the second activity), the color change doesn't register after going back to the home activity until the floating action button is pressed.
+
+
+---
+
+#### Future Goals
+
+- Allow already created lists and items to be editied
+- Save data after closing the app so that lists and items are saved the next time it's opened
