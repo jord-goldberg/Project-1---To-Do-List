@@ -84,13 +84,15 @@ public class ListActivity extends AppCompatActivity {
                         } else if (title.getText().toString().contains("\n")) {
                             String[] items = title.getText().toString().split("\n");
                             for (int i = 0; i < items.length; i++){
-                                toDoList.addToDoItem(new ToDoItem());
-                                toDoList.getToDoItem(toDoList.getToDoItemList().size()-1)
-                                        .setTitle(items[i].trim());
-                                toDoList.getToDoItem(toDoList.getToDoItemList().size()-1)
-                                        .setDescription(description.getText().toString().trim());
-                                itemRecyclerViewAdapter.notifyDataSetChanged();
-                                dialog.dismiss();
+                                if (items[i].trim().length() != 0) {
+                                    toDoList.addToDoItem(new ToDoItem());
+                                    toDoList.getToDoItem(toDoList.getToDoItemList().size()-1)
+                                            .setTitle(items[i].trim());
+                                    toDoList.getToDoItem(toDoList.getToDoItemList().size()-1)
+                                            .setDescription(description.getText().toString().trim());
+                                    itemRecyclerViewAdapter.notifyDataSetChanged();
+                                    dialog.dismiss();
+                                }
                             }
 
                         } else {
